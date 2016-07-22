@@ -43,11 +43,11 @@ namespace ConeSharp
 
             try
             {
-                scope = (ITelescope)Activator.CreateInstance(Type.GetTypeFromProgID(Settings1.Default.LastMountId));
+                scope = CreateScope(Settings1.Default.LastMountId);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _state.ShowMessage("Cannot create ASCOM mount driver " + Settings1.Default.LastMount);
+                _state.ShowMessage("Cannot create ASCOM mount driver " + Settings1.Default.LastMount + "\r\nBecause : " + e.Message);
                 return null;
             }
 
@@ -81,17 +81,24 @@ namespace ConeSharp
 
             try
             {
-                var scope = (ITelescope)Activator.CreateInstance(Type.GetTypeFromProgID(device));
+                var scope = CreateScope(device);
                 Settings1.Default.LastMountId = device;
                 Settings1.Default.LastMount = scope.Name;
                 Settings1.Default.Save();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _state.ShowMessage("Cannot create ASCOM mount driver " + device);
+                _state.ShowMessage("Cannot create ASCOM mount driver " + device + "\r\nBecause : " + e.Message);
             }
 
             
+        }
+
+        private static ITelescope CreateScope(string device)
+        {
+            var instance = Activator.CreateInstance(Type.GetTypeFromProgID(device));
+            var scope = instance is ITelescope ? (ITelescope) instance : new MountDispatchProxy(instance);
+            return scope;
         }
 
         public string ButtonText { get { return "Select Mount"; } }

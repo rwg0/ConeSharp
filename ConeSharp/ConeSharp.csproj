@@ -40,6 +40,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Common Files\ASCOM\Platform\v6\ASCOM.Utilities.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -67,6 +68,7 @@
     <Compile Include="GotoWestStep.cs" />
     <Compile Include="IntroStep.cs" />
     <Compile Include="IStep.cs" />
+    <Compile Include="MountDispatchProxy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RADecl.cs" />
