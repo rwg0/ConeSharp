@@ -36,6 +36,11 @@
     <ApplicationIcon>Cone.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ASCOM.DeviceInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ASCOM.DeviceInterfaces.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="ASCOM.Utilities, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Common Files\ASCOM\Platform\v6\ASCOM.Utilities.dll</HintPath>
@@ -81,6 +86,7 @@
       <DependentUpon>Settings1.settings</DependentUpon>
     </Compile>
     <Compile Include="State.cs" />
+    <Compile Include="TelescopeV3Proxy.cs" />
     <EmbeddedResource Include="ConeSharpForm.resx">
       <DependentUpon>ConeSharpForm.cs</DependentUpon>
     </EmbeddedResource>

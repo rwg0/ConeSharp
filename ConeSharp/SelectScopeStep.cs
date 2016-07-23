@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 
 using System.Windows.Forms;
+using ASCOM.DeviceInterface;
 using ASCOM.Utilities;
 using ASCOM.Interface;
+using AlignmentModes = ASCOM.Interface.AlignmentModes;
 
 namespace ConeSharp
 {
@@ -90,15 +92,16 @@ namespace ConeSharp
             {
                 _state.ShowMessage("Cannot create ASCOM mount driver " + device + "\r\nBecause : " + e.Message);
             }
-
-            
         }
 
         private static ITelescope CreateScope(string device)
         {
             var instance = Activator.CreateInstance(Type.GetTypeFromProgID(device));
-            var scope = instance is ITelescope ? (ITelescope) instance : new MountDispatchProxy(instance);
-            return scope;
+            if (instance is ITelescope)
+                return (ITelescope)instance;
+            if (instance is ITelescopeV3)
+                return new TelescopeV3Proxy((ITelescopeV3)instance);
+            return new MountDispatchProxy(instance);
         }
 
         public string ButtonText { get { return "Select Mount"; } }
