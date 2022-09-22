@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using ASCOM.Interface;
+using ASCOM.DeviceInterface;
 
 namespace ConeSharp
 {
@@ -50,7 +50,7 @@ namespace ConeSharp
             return _coneError;
         }
 
-        public ITelescope Mount { get; set; }
+        public ITelescopeV3 Mount { get; set; }
 
         public IWin32Window Form { get; private set; }
 

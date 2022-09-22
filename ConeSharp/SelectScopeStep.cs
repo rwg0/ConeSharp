@@ -6,8 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using ASCOM.DeviceInterface;
 using ASCOM.Utilities;
-using ASCOM.Interface;
-using AlignmentModes = ASCOM.Interface.AlignmentModes;
+using ASCOM.DriverAccess;
 
 namespace ConeSharp
 {
@@ -35,7 +34,7 @@ namespace ConeSharp
 
         public IStep OnNext()
         {
-            ITelescope scope = null;
+            ITelescopeV3 scope = null;
 
             if (string.IsNullOrEmpty(Settings1.Default.LastMountId))
             {
@@ -53,7 +52,7 @@ namespace ConeSharp
                 return null;
             }
 
-            if (scope.AlignmentMode != AlignmentModes.algGermanPolar)
+            if (scope.AlignmentMode == AlignmentModes.algAltAz)
             {
                 _state.ShowMessage(_state.AppName + " will only work with a German Equatorial style mount (as it needs the meridian flip to happen when swapping sides of the meridian).");
                 return null;
@@ -94,14 +93,9 @@ namespace ConeSharp
             }
         }
 
-        private static ITelescope CreateScope(string device)
+        private static ITelescopeV3 CreateScope(string device)
         {
-            var instance = Activator.CreateInstance(Type.GetTypeFromProgID(device));
-            if (instance is ITelescope)
-                return (ITelescope)instance;
-            if (instance is ITelescopeV3)
-                return new TelescopeV3Proxy((ITelescopeV3)instance);
-            return new MountDispatchProxy(instance);
+            return new Telescope(device);
         }
 
         public string ButtonText { get { return "Select Mount"; } }

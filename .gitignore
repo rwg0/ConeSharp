@@ -2,3 +2,5 @@
 /ConeSharp/obj
 /ConeSharp/bin
 /*.user
+/.vs
+/packages

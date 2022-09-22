@@ -1,5 +1,5 @@
 ﻿using System;
-using ASCOM.Interface;
+using ASCOM.DeviceInterface;
 
 namespace ConeSharp
 {
